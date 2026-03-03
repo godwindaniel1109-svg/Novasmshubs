@@ -13,6 +13,7 @@ import SelectNumberPage from './components/SelectNumberPage';
 import OrderConfirmationPage from './components/OrderConfirmationPage';
 import FundWalletPage from './components/FundWalletPage';
 import ProfilePage from './components/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
 // Admin imports
 import AdminLoginPage from './components/admin/AdminLoginPage';
 import AdminDashboardLayout from './components/admin/AdminDashboardLayout';
@@ -33,74 +34,92 @@ function App() {
           <Route 
             path="/dashboard" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <DashboardPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <DashboardPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/buy-number" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <BuyNumberPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <BuyNumberPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/select-number" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <SelectNumberPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <SelectNumberPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/order-confirmation" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <OrderConfirmationPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <OrderConfirmationPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           {/* Placeholder routes for other pages */}
           <Route 
             path="/buy-usa-number" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <BuyUSANumberPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <BuyUSANumberPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/order-history" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <MyOrdersPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <MyOrdersPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/transaction-history" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140">
-                <MyTransactionsPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140">
+                  <MyTransactionsPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/profile" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140" profileImage="/images/default-avatar.png">
-                <ProfilePage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140" profileImage="/images/default-avatar.png">
+                  <ProfilePage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/fund-wallet" 
             element={
-              <DashboardLayout userName="John Doe" walletBalance="₦140" profileImage="/images/default-avatar.png">
-                <FundWalletPage />
-              </DashboardLayout>
+              <ProtectedRoute>
+                <DashboardLayout userName="John Doe" walletBalance="₦140" profileImage="/images/default-avatar.png">
+                  <FundWalletPage />
+                </DashboardLayout>
+              </ProtectedRoute>
             } 
           />
           

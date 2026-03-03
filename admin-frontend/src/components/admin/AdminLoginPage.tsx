@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Shield, Eye, EyeOff, Lock, Mail } from 'lucide-react';
 
 const AdminLoginPage: React.FC = () => {
@@ -9,6 +9,16 @@ const AdminLoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Check if admin is already logged in
+    const token = localStorage.getItem('adminToken');
+    const admin = localStorage.getItem('adminData');
+    if (token && admin) {
+      navigate('/admin/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,17 +32,29 @@ const AdminLoginPage: React.FC = () => {
       // Basic validation (in production, this would be an API call)
       if (email === 'admin@novasmshubs.com' && password === 'admin123') {
         // Store admin token
-        localStorage.setItem('adminToken', 'mock-admin-token');
-        localStorage.setItem('adminData', JSON.stringify({
+        const mockAdmin = {
+          id: '1',
           name: 'Admin User',
-          email: 'admin@novasmshubs.com'
-        }));
+          email: 'admin@novasmshubs.com',
+          role: 'super_admin'
+        };
         
-        navigate('/admin/dashboard');
+        localStorage.setItem('adminToken', 'mock-admin-token-' + Date.now());
+        localStorage.setItem('adminData', JSON.stringify(mockAdmin));
+        
+        // Get return URL from query params
+        const returnUrl = searchParams.get('returnUrl');
+        
+        // Redirect to intended page or dashboard
+        if (returnUrl) {
+          navigate(decodeURIComponent(returnUrl));
+        } else {
+          navigate('/admin/dashboard');
+        }
       } else {
         setError('Invalid email or password');
       }
-    } catch (err) {
+    } catch (error) {
       setError('Login failed. Please try again.');
     } finally {
       setIsLoading(false);

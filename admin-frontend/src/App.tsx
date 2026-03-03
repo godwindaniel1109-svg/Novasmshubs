@@ -6,7 +6,9 @@ import AdminDashboardPage from './components/AdminDashboardPage';
 import UserManagementPage from './components/UserManagementPage';
 import TransactionManagementPage from './components/TransactionManagementPage';
 import NotificationPage from './components/NotificationPage';
+import AnnouncementManagementPage from './components/admin/AnnouncementManagementPage';
 import AdminProfilePage from './components/AdminProfilePage';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 import './App.css';
 
 function App() {
@@ -19,57 +21,81 @@ function App() {
           <Route 
             path="/dashboard" 
             element={
-              <AdminDashboardLayout>
-                <AdminDashboardPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <AdminDashboardPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/users" 
             element={
-              <AdminDashboardLayout>
-                <UserManagementPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <UserManagementPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/transactions" 
             element={
-              <AdminDashboardLayout>
-                <TransactionManagementPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <TransactionManagementPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/notifications" 
             element={
-              <AdminDashboardLayout>
-                <NotificationPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <NotificationPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/announcements" 
+            element={
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <AnnouncementManagementPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/statistics" 
             element={
-              <AdminDashboardLayout>
-                <AdminDashboardPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <AdminDashboardPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/profile" 
             element={
-              <AdminDashboardLayout>
-                <AdminProfilePage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <AdminProfilePage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
           <Route 
             path="/settings" 
             element={
-              <AdminDashboardLayout>
-                <AdminDashboardPage />
-              </AdminDashboardLayout>
+              <AdminProtectedRoute>
+                <AdminDashboardLayout>
+                  <AdminDashboardPage />
+                </AdminDashboardLayout>
+              </AdminProtectedRoute>
             } 
           />
         </Routes>

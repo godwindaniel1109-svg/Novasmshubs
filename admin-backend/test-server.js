@@ -322,6 +322,59 @@ const mockManualOverrides = [
   }
 ];
 
+// Mock announcements data
+const mockAnnouncements = [
+  {
+    id: '1',
+    title: 'System Maintenance Tonight',
+    message: 'We will be performing scheduled maintenance tonight from 2 AM to 4 AM. Services may be temporarily unavailable.',
+    type: 'warning',
+    target: 'all',
+    targetUsers: [],
+    deliveryMethod: 'both',
+    isActive: true,
+    priority: 'high',
+    scheduledFor: new Date(Date.now() + 3600000).toISOString(),
+    createdAt: new Date(Date.now() - 86400000).toISOString(),
+    createdBy: '1',
+    sentAt: new Date(Date.now() - 86400000).toISOString(),
+    readCount: 850,
+    totalRecipients: 1200
+  },
+  {
+    id: '2',
+    title: 'New Payment Methods Added',
+    message: 'We are excited to announce that we have added new payment methods including cryptocurrency and bank transfers.',
+    type: 'success',
+    target: 'all',
+    targetUsers: [],
+    deliveryMethod: 'app',
+    isActive: true,
+    priority: 'medium',
+    createdAt: new Date(Date.now() - 172800000).toISOString(),
+    createdBy: '1',
+    sentAt: new Date(Date.now() - 172800000).toISOString(),
+    readCount: 450,
+    totalRecipients: 800
+  },
+  {
+    id: '3',
+    title: 'Welcome to NovaSMSHubs!',
+    message: 'Thank you for joining our platform. Get started by exploring our features and services.',
+    type: 'info',
+    target: 'individual',
+    targetUsers: ['1', '2', '3'],
+    deliveryMethod: 'notification',
+    isActive: true,
+    priority: 'low',
+    createdAt: new Date(Date.now() - 259200000).toISOString(),
+    createdBy: '2',
+    sentAt: new Date(Date.now() - 259200000).toISOString(),
+    readCount: 2,
+    totalRecipients: 3
+  }
+];
+
 // API Routes
 app.get('/api/admin/health', (req, res) => {
   res.json({ status: 'OK', message: 'Admin server is running' });
@@ -554,6 +607,75 @@ app.get('/api/admin/dynamic/numbers', (req, res) => {
   ];
   
   res.json({ numbers: dynamicNumbers });
+});
+
+// Announcement Management
+app.get('/api/admin/announcements', (req, res) => {
+  res.json({ announcements: mockAnnouncements });
+});
+
+app.post('/api/admin/announcements', (req, res) => {
+  const newAnnouncement = {
+    id: (mockAnnouncements.length + 1).toString(),
+    ...req.body,
+    createdAt: new Date().toISOString(),
+    createdBy: '1',
+    sentAt: req.body.scheduledFor ? null : new Date().toISOString(),
+    readCount: 0,
+    totalRecipients: req.body.target === 'all' ? 1200 : (req.body.targetUsers?.length || 0)
+  };
+  
+  mockAnnouncements.push(newAnnouncement);
+  
+  res.json({ 
+    message: 'Announcement created successfully',
+    announcement: newAnnouncement
+  });
+});
+
+app.put('/api/admin/announcements/:id', (req, res) => {
+  const { id } = req.params;
+  const announcementIndex = mockAnnouncements.findIndex(a => a.id === id);
+  
+  if (announcementIndex === -1) {
+    return res.status(404).json({ error: 'Announcement not found' });
+  }
+  
+  mockAnnouncements[announcementIndex] = { ...mockAnnouncements[announcementIndex], ...req.body };
+  
+  res.json({ 
+    message: 'Announcement updated successfully',
+    announcement: mockAnnouncements[announcementIndex]
+  });
+});
+
+app.delete('/api/admin/announcements/:id', (req, res) => {
+  const { id } = req.params;
+  const announcementIndex = mockAnnouncements.findIndex(a => a.id === id);
+  
+  if (announcementIndex === -1) {
+    return res.status(404).json({ error: 'Announcement not found' });
+  }
+  
+  mockAnnouncements.splice(announcementIndex, 1);
+  
+  res.json({ message: 'Announcement deleted successfully' });
+});
+
+app.put('/api/admin/announcements/:id/toggle', (req, res) => {
+  const { id } = req.params;
+  const announcementIndex = mockAnnouncements.findIndex(a => a.id === id);
+  
+  if (announcementIndex === -1) {
+    return res.status(404).json({ error: 'Announcement not found' });
+  }
+  
+  mockAnnouncements[announcementIndex].isActive = !mockAnnouncements[announcementIndex].isActive;
+  
+  res.json({ 
+    message: 'Announcement status updated successfully',
+    announcement: mockAnnouncements[announcementIndex]
+  });
 });
 
 // Payment Proof Management

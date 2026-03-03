@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
@@ -11,16 +11,56 @@ const LoginPage: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if (token && user) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Add login logic here
-    setTimeout(() => {
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Mock successful login
+      const mockUser = {
+        id: '1',
+        email: formData.email,
+        username: formData.email.split('@')[0],
+        balance: 5000
+      };
+      
+      const mockToken = 'mock-jwt-token-' + Date.now();
+      
+      // Store authentication data
+      localStorage.setItem('token', mockToken);
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      // Get return URL from query params
+      const returnUrl = searchParams.get('returnUrl');
+      
+      // Redirect to intended page or dashboard
+      if (returnUrl) {
+        navigate(decodeURIComponent(returnUrl));
+      } else {
+        navigate('/dashboard');
+      }
+      
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Handle error (show error message)
+    } finally {
       setIsLoading(false);
-      // Redirect to dashboard on successful login
-      window.location.href = '/dashboard';
-    }, 2000);
+    }
   };
 
   const handleGoogleSignIn = async () => {

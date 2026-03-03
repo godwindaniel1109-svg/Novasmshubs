@@ -351,6 +351,48 @@ class AdminApiService {
     return response.json();
   }
 
+  // Announcement Management
+  async getAnnouncements() {
+    const response = await fetch(`${API_BASE_URL}/announcements`, {
+      headers: this.getAuthHeaders()
+    });
+    return response.json();
+  }
+
+  async createAnnouncement(announcementData: any) {
+    const response = await fetch(`${API_BASE_URL}/announcements`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(announcementData)
+    });
+    return response.json();
+  }
+
+  async updateAnnouncement(id: string, announcementData: any) {
+    const response = await fetch(`${API_BASE_URL}/announcements/${id}`, {
+      method: 'PUT',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(announcementData)
+    });
+    return response.json();
+  }
+
+  async deleteAnnouncement(id: string) {
+    const response = await fetch(`${API_BASE_URL}/announcements/${id}`, {
+      method: 'DELETE',
+      headers: this.getAuthHeaders()
+    });
+    return response.json();
+  }
+
+  async toggleAnnouncement(id: string) {
+    const response = await fetch(`${API_BASE_URL}/announcements/${id}/toggle`, {
+      method: 'PUT',
+      headers: this.getAuthHeaders()
+    });
+    return response.json();
+  }
+
   // System Health
   async getSystemHealth() {
     const response = await fetch(`${API_BASE_URL}/health`, {

@@ -12,7 +12,8 @@ import {
   X,
   Shield,
   Mail,
-  MessageSquare
+  MessageSquare,
+  Megaphone
 } from 'lucide-react';
 
 interface AdminDashboardLayoutProps {
@@ -53,6 +54,12 @@ const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({ children })
       name: 'Notifications',
       icon: Bell,
       route: '/admin/notifications',
+      badge: null
+    },
+    {
+      name: 'Announcements',
+      icon: Megaphone,
+      route: '/admin/announcements',
       badge: null
     },
     {

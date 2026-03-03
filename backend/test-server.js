@@ -132,6 +132,48 @@ const mockOrders = [
   }
 ];
 
+// Mock announcements for users
+const mockUserAnnouncements = [
+  {
+    id: '1',
+    title: 'System Maintenance Tonight',
+    message: 'We will be performing scheduled maintenance tonight from 2 AM to 4 AM. Services may be temporarily unavailable.',
+    type: 'warning',
+    priority: 'high',
+    isActive: true,
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '2',
+    title: 'New Payment Methods Added',
+    message: 'We are excited to announce that we have added new payment methods including cryptocurrency and bank transfers.',
+    type: 'success',
+    priority: 'medium',
+    isActive: true,
+    createdAt: new Date(Date.now() - 172800000).toISOString()
+  }
+];
+
+// Mock notifications for users
+const mockUserNotifications = [
+  {
+    id: '1',
+    title: 'Welcome to NovaSMSHubs!',
+    message: 'Thank you for joining our platform. Get started by exploring our features and services.',
+    type: 'info',
+    isRead: false,
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: '2',
+    title: 'Your order has been processed',
+    message: 'Your SMS number order has been successfully processed and is now active.',
+    type: 'success',
+    isRead: true,
+    createdAt: new Date(Date.now() - 172800000).toISOString()
+  }
+];
+
 // Mock banned numbers
 const bannedNumbers = new Set(['+79123456790', '+79123456791']);
 
@@ -258,8 +300,34 @@ app.post('/api/transactions/proof', (req, res) => {
 });
 
 // Get payment proofs (for admin)
-app.get('/api/admin/payment-proofs', (req, res) => {
+app.get('/api/payment-proofs', (req, res) => {
   res.json({ payments: mockPaymentProofs });
+});
+
+// User Announcements
+app.get('/api/announcements/active', (req, res) => {
+  res.json({ announcements: mockUserAnnouncements });
+});
+
+app.get('/api/notifications', (req, res) => {
+  res.json({ notifications: mockUserNotifications });
+});
+
+app.put('/api/notifications/:id/read', (req, res) => {
+  const { id } = req.params;
+  const notificationIndex = mockUserNotifications.findIndex(n => n.id === id);
+  
+  if (notificationIndex !== -1) {
+    mockUserNotifications[notificationIndex].isRead = true;
+  }
+  
+  res.json({ message: 'Notification marked as read' });
+});
+
+app.post('/api/announcements/:id/read', (req, res) => {
+  const { id } = req.params;
+  // In a real app, you would track which user read which announcement
+  res.json({ message: 'Announcement read tracked' });
 });
 
 // Review payment proof (for admin)

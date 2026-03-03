@@ -17,6 +17,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import Logo from './Logo';
+import AnnouncementBar from './AnnouncementBar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -105,6 +106,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* Announcement Bar */}
+      <AnnouncementBar onAnnouncementRead={(id) => {
+        console.log('Announcement read:', id);
+        // In a real app, you would send this to the backend
+      }} />
+      
       {/* Top Navigation */}
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200">
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
